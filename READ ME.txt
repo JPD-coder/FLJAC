@@ -1,0 +1,19 @@
+UPLOAD TO GITHUB
+================
+
+Upload BOTH files to your repository. That is the whole website.
+
+    index.html
+    rules.html
+
+No assets folder and no .nojekyll needed - every image is embedded.
+
+  In your repo:  Add file -> Upload files
+  Drag both in, Commit changes
+  Wait 30-60 seconds, then hard-refresh (Ctrl+Shift+R / Cmd+Shift+R)
+
+  Your site:  https://jpd-coder.github.io/FLJAC/
+  Rules page: /rules.html
+
+Do not open these in GitHub's built-in editor - the embedded images make
+the lines very long and the editor struggles. Uploading is fine.

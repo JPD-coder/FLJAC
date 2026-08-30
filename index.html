@@ -535,7 +535,7 @@ footer a{color:var(--ash)}
         <table>
           <tr><th>Award</th><th style="text-align:right">Prize</th></tr>
           <tr><td>Club League Champion<br><span class="hint">Closest win-total prediction in the winning club's pool. Ties break on predicted places, then shows.</span></td><td class="money" style="text-align:right">$3,500<br><span class="hint">+ Championship Belt</span></td></tr>
-          <tr><td>Biggest Fan<br><span class="hint">Open to everyone, any club, win or lose. Games attended, merch bought, and social posts — capped weekly.</span></td><td class="money" style="text-align:right">$1,500<br><span class="hint">+ Championship Belt</span></td></tr>
+          <tr><td>Biggest Fan<br><span class="hint">Open to everyone, any club, win or lose. Cards attended and social posts — capped weekly. No purchase earns points.</span></td><td class="money" style="text-align:right">$1,500<br><span class="hint">+ Championship Belt</span></td></tr>
         </table>
       </div>
     </div>
@@ -559,7 +559,7 @@ footer a{color:var(--ash)}
       </table>
       <div class="lb-empty">All eight clubs start level on opening night. <b>First results post the day after the Tuesday January 5 card</b>, and this board runs through March 31.</div>
     </div>
-      <p class="ruleslink"><a href="rules.html">See the rules and legal disclaimers</a><span>No purchase or payment of any kind is necessary to enter or to win. Void where prohibited. 18+.</span></p>
+      <p class="ruleslink"><a href="rules.html">See the rules and legal disclaimers</a><span>No purchase or payment of any kind is necessary to enter or to win. Void where prohibited. 18+. Not open to New York residents.</span></p>
 
   </div>
 </section>
@@ -630,7 +630,7 @@ footer a{color:var(--ash)}
       <div class="lb-empty">No standings yet — live scoring starts on opening night. <b>First results post the day after the Tuesday January 5 card</b>, and this board runs through March 31.</div>
     </div>
 
-    <p class="ruleslink"><a href="rules.html">See the rules and legal disclaimers</a><span>No purchase or payment of any kind is necessary to enter or to win. Void where prohibited. 18+.</span></p>
+    <p class="ruleslink"><a href="rules.html">See the rules and legal disclaimers</a><span>No purchase or payment of any kind is necessary to enter or to win. Void where prohibited. 18+. Not open to New York residents.</span></p>
   </div>
 </section>
 
@@ -761,7 +761,7 @@ footer a{color:var(--ash)}
           <div class="rulesbox" id="rulesC" tabindex="0"><h5>Free to enter</h5>
 <p><strong>No purchase or payment of any kind is necessary to enter or to win.</strong> A purchase will not improve your chance of winning. Void where prohibited.</p>
 <h5>Who can enter</h5>
-<p>Aged 18 or over, legal residents of the United States. Employees and immediate family of the Administrator, of Dania Beach Jai Alai, and of any sponsor are not eligible, nor are athletes on the 2027 roster or fronton officials.</p>
+<p>Aged 18 or over, legal residents of the United States, <strong>excluding residents of New York</strong>. Employees and immediate family of the Administrator, of Dania Beach Jai Alai, and of any sponsor are not eligible, nor are athletes on the 2027 roster or fronton officials.</p>
 <h5>Your entry</h5>
 <p>One entry per person, verified by email link — your entry is not active until you click it. You pick one of the eight clubs and predict its wins (1st), places (2nd) and shows (3rd) across the season, each between 60 and 160. Only the win total decides the title; places then shows break a tie. Entries close 11:59pm ET on January 4, 2027.</p>
 <h5>How it is decided</h5>
@@ -826,7 +826,7 @@ footer a{color:var(--ash)}
           <div class="rulesbox" id="rulesM" tabindex="0"><h5>Free to enter</h5>
 <p><strong>No purchase or payment of any kind is necessary to enter or to win.</strong> A purchase will not improve your chance of winning. Void where prohibited.</p>
 <h5>Who can enter</h5>
-<p>Aged 18 or over, legal residents of the United States. Employees and immediate family of the Administrator, of Dania Beach Jai Alai, and of any sponsor are not eligible, nor are athletes on the 2027 roster or fronton officials.</p>
+<p>Aged 18 or over, legal residents of the United States, <strong>excluding residents of New York</strong>. Employees and immediate family of the Administrator, of Dania Beach Jai Alai, and of any sponsor are not eligible, nor are athletes on the 2027 roster or fronton officials.</p>
 <h5>How you play</h5>
 <p>Pick <strong>six different players</strong> from the 22-man roster and assign two to <strong>win</strong>, two to <strong>place</strong> and two to <strong>show</strong>. There is no salary cap and no position requirement. Your entry runs from the first card on January 5 through the last on March 31.</p>
 <h5>Scoring</h5>
@@ -1028,7 +1028,8 @@ const dl=rows=>`<dl>${rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('')}<
 document.getElementById('clubForm').addEventListener('submit',e=>{
   e.preventDefault();
   const name=v('cName'), email=v('cEmail'), phone=v('cPhone'), dob=v('cDob'),
-        zip=v('cZip'), club=v('cClub'), wins=v('cWins');
+        zip=v('cZip'), club=v('cClub'), wins=v('cWins'),
+        places=v('cPlaces'), shows=v('cShows');
   if(!document.getElementById('acceptC').checked){return alert('Please read and accept the rules first.');}
   if(!name){return alert('Add your name.');}
   if(!emailOk(email)){return alert('That email address does not look right.');}
@@ -1036,9 +1037,11 @@ document.getElementById('clubForm').addEventListener('submit',e=>{
   if(!adult(dob)){return alert('You must be 18 or over to enter.');}
   if(!zipOk(zip)){return alert('ZIP should be five digits.');}
   if(!club){return alert('Pick a club.');}
-  const w=Number(wins);
+  const w=Number(wins), p=Number(places), s=Number(shows);
   if(!(w>=60&&w<=160)){return alert('Predicted wins must be between 60 and 160.');}
-  
+  if(!(p>=60&&p<=160)){return alert('Predicted places must be between 60 and 160.');}
+  if(!(s>=60&&s<=160)){return alert('Predicted shows must be between 60 and 160.');}
+
   submitEntry('club',{name,email,phone,dob,zip,club,wins,places,shows});
   show($('clubConfirm'),`<h4>Check your email</h4>
     <p style="font-size:15px"><strong>Your entry isn&rsquo;t active yet.</strong> We&rsquo;ve sent a verification link to ${email} — click it to confirm. First results post the day after the January 5 card.</p>
@@ -1073,7 +1076,7 @@ document.getElementById('mbForm').addEventListener('submit',e=>{
   if(picks.some(p=>!p)){return alert('Choose a player for all six slots.');}
   if(new Set(picks).size!==6){return alert('Pick six different players — no repeats.');}
   submitEntry('players',{name,email,phone,dob,zip,win1:picks[0],win2:picks[1],place1:picks[2],place2:picks[3],show1:picks[4],show2:picks[5]});
-  show('mbConfirm',`<h4>You're in — check your email</h4>
+  show($('mbConfirm'),`<h4>You're in — check your email</h4>
     <p><strong>Your entry isn't active yet.</strong> We've sent a verification link to ${email} — click it to confirm. Your six start scoring from the Tuesday January 5 matinee.</p>
     ${dl([['Win',picks[0]+' & '+picks[1]],['Place',picks[2]+' & '+picks[3]],['Show',picks[4]+' & '+picks[5]]])}
     <p style="margin-top:10px" class="hint">Swap up to two players and reassign roles on Feb 2, Feb 23 and Mar 16.</p>`);
